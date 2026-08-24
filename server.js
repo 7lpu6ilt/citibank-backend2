@@ -4,10 +4,12 @@ import dotenv from 'dotenv';
 import pkg from 'pg';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import dns from 'dns';
 
 const { Pool } = pkg;
 
 dotenv.config();
+dns.setDefaultResultOrder('ipv4first');
 const app = express();
 app.use(cors());
 app.use(express.json());
