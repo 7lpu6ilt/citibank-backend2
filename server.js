@@ -15,15 +15,8 @@ app.use(cors());
 app.use(express.json());
 
 const pool = new Pool({
-  host: 'aws-0-eu-west-1.pooler.supabase.com',
-  port: 5432,
-  user: 'postgres',
-  password: 'Insecuresecur!1',
-  database: 'postgres',
-  ssl: {
-    rejectUnauthorized: false,
-    servername: 'db.foblvcrhovmfltpoimfu.supabase.co'
-  }
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false }
 });
 
 // ========== Initialize Tables ==========
