@@ -14,11 +14,30 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+const SUPABASE_HOST = 'db.foblvcrhovmfltpoimfu.supabase.co';
+let pool;
+
+async function getIPv4(host) {
+  const res = await fetch(`https://dns.google/resolve?name=${host}&type=A`);
+  const data = await res.json();
+  if (data.Answer && data.Answer.length) {
+    const ipv4 = data.Answer.find(a => a.type === 1);
+    if (ipv4) return ipv4.data;
+  }
+  throw new Error('No IPv4 found');
+}
+
+const ipv4 = await getIPv4(SUPABASE_HOST);
+console.log('IPv4 for Supabase:', ipv4);
+
+pool = new Pool({
+  host: ipv4,
+  port: 5432,
+  user: 'postgres',
+  password: 'Insecuresecur!1',
+  database: 'postgres',
   ssl: { rejectUnauthorized: false }
 });
-
 // ========== Initialize Tables ==========
 async function initDB() {
   await pool.query(`
