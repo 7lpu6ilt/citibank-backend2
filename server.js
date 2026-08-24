@@ -15,7 +15,11 @@ app.use(cors());
 app.use(express.json());
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  host: 'db.foblvcrhovmfltpoimfu.supabase.co',
+  port: 5432,
+  user: 'postgres',
+  password: 'Insecuresecur!1',
+  database: 'postgres',
   ssl: { rejectUnauthorized: false },
   family: 4
 });
